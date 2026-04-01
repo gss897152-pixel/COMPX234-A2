@@ -54,8 +54,11 @@ class ReadersWritersMonitor:
         4. Print a useful log message.
         """
         with self.condition:
-            # TODO: Replace 'pass' with your logic
-            pass
+            print(f"Reader {reader_id} is WAITING (writer active)")
+            self.condition.wait()
+
+        self.active_readers += 1
+        print(f"Reader {reader_id} starts reading | Active readers = {self.active_readers}")
 
     def end_read(self, reader_id: int) -> None:
         """
@@ -67,9 +70,12 @@ class ReadersWritersMonitor:
         3. If this was the last reader, wake waiting threads.
         """
         with self.condition:
-            # TODO: Replace 'pass' with your logic
-            pass
+            self.active_readers -= 1
+            print(f"Reader {reader_id} ends reading | Active readers = {self.active_readers}")
 
+            if self.active_readers == 0:
+                self.condition.notify_all()
+                
     def start_write(self, writer_id: int) -> None:
         """
         Called before a writer starts writing.
