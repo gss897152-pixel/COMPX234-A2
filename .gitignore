@@ -1,0 +1,14 @@
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# IDE config
+.vscode/
+.idea/
+# Env
+venv/
+env/
+# Test files
+*.log
+output.txt
