@@ -112,7 +112,7 @@ class ReadersWritersMonitor:
         """
         with self.condition:
             self.active_writers -= 1
-            print(f"Writer {writer_id} ends writing")
+            print(f"Writer {writer_id} ends writing | Active writers = {self.active_writers}")
             self.condition.notify_all()
 
 # Donot Change this
