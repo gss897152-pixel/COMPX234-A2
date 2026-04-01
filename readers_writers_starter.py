@@ -27,8 +27,12 @@ import time
 class ReadersWritersMonitor:
     """
     A monitor-style class that controls access to one shared resource.
-
-    Suggested shared state:
+    
+    Rules: Multiple readers can read at the same time.
+    Writers must have exclusive access.
+    Uses condition variables for thread synchronization.
+   
+     Suggested shared state:
     - active_readers: number of readers currently reading
     - active_writers: 0 or 1
     - waiting_writers: number of writers waiting (optional, but useful)
@@ -164,7 +168,7 @@ def main() -> None:
     - Join all threads.
     - Print a final message when the simulation is complete.
     """
-    random.seed(42)
+    random.seed(99)  # Changed seed for testing
 
     monitor = ReadersWritersMonitor()
 
