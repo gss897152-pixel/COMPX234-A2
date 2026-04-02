@@ -67,6 +67,8 @@ class ReadersWritersMonitor:
     def end_read(self, reader_id: int) -> None:
         """
         Called after a reader finishes reading.
+        Decrease active readers and wake waiting threads if this is the last reader.
+        Lock-protected state, notify_all for safe wakeup.
 
         TODO:
         1. Decrease active_readers.
@@ -84,6 +86,7 @@ class ReadersWritersMonitor:
         """
         Called before a writer starts writing.
         Block the writer if any reader is reading or another writer is active.
+        While loop re-check, track waiting writers, lock-protected state.
 
         TODO:
         1. Increase waiting_writers before waiting (optional but recommended).
@@ -104,6 +107,8 @@ class ReadersWritersMonitor:
     def end_write(self, writer_id: int) -> None:
         """
         Called after a writer finishes writing.
+        Decrease active writers and wake all waiting threads.
+        Lock-protected state, notify_all for neutral priority.
 
         TODO:
         1. Decrease active_writers.
